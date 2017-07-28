@@ -1,5 +1,9 @@
 package com.huanqiu.shangcheng.utils;
 
+import com.huanqiu.shangcheng.menu.Button;
+import com.huanqiu.shangcheng.menu.ClickButton;
+import com.huanqiu.shangcheng.menu.Menu;
+import com.huanqiu.shangcheng.menu.ViewButton;
 import com.huanqiu.shangcheng.pojo.AccessToken;
 import net.sf.json.JSONObject;
 import org.apache.http.HttpEntity;
@@ -26,6 +30,7 @@ public class WeiXinUtil {
     public static final  String ACCESS_TOKEN_URL="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
     public static final  String UPLOAD_URL ="https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
 
+    public  static final String CREATE_MENU_URL="https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 
     /**
      * get 请求
@@ -73,7 +78,7 @@ public class WeiXinUtil {
             httpPost.setEntity(new StringEntity(outStr,"UTF-8"));
             HttpResponse httpResponse= defaultHttpClient.execute(httpPost); //发送一个请求post
             HttpEntity httpEntity= httpResponse.getEntity();
-            String result= EntityUtils.toString(httpEntity,"UF-8");
+            String result= EntityUtils.toString(httpEntity,"UTF-8");
             jsonObject=jsonObject.fromObject(result);
 
         } catch (Exception e) {
@@ -176,4 +181,42 @@ public class WeiXinUtil {
         return mediaId;
     }
 
+    /**
+     * 组装菜单
+     * @return
+     */
+    public static Menu iniMenu(){
+        Menu menu =new Menu();
+        ViewButton button11=new ViewButton();
+        button11.setName("大唐智美");
+        button11.setType("view");
+        button11.setUrl("http://tangedu.com.cn/");
+
+        ClickButton button21=new ClickButton();
+        button21.setName("扫码事件");
+        button21.setType("scancode_push");
+        button21.setKey("21");
+
+        ClickButton button22=new ClickButton();
+        button22.setName("地址位置");
+        button22.setType("location_select");
+        button22.setKey("22");
+        ClickButton button2=new ClickButton();
+        button2.setName("课程介绍");
+        button2.setSub_button(new Button[]{button21,button22});
+
+        menu.setButton(new Button[]{button11,button2});
+        return menu;
+    }
+
+
+    public static int createMenu(String token,String menu){
+        int result=0;
+        String url=CREATE_MENU_URL.replace("ACCESS_TOKEN",token);
+        JSONObject jsonObject=doPostStr(url,menu);
+        if(jsonObject!=null){
+            result=jsonObject.getInt("errcode");
+        }
+        return  result;
+    }
 }
