@@ -51,7 +51,9 @@ public class WeiXinUtil {
             }
 
         } catch (IOException e) {
+            System.out.println("在微信服务器获取access_token失败");
             e.printStackTrace();
+
         }
         return jsonObject;
     }
@@ -166,7 +168,11 @@ public class WeiXinUtil {
         }
         JSONObject jsonObject=JSONObject.fromObject(result);
         System.out.println(jsonObject);
-        String mediaId=jsonObject.getString("media_id");
+        String typeName="media_id";
+        if(!"image".equals(type)){
+            typeName=type+"_media_id";
+        }
+        String mediaId=jsonObject.getString(typeName);
         return mediaId;
     }
 

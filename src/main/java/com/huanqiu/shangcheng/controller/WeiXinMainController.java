@@ -99,7 +99,10 @@ public class WeiXinMainController {
                     message=MessageUtil.initNewsMessage(toUserName,fromUserName,list);
                 }else if("3".equals(content)){
                     message=MessageUtil.iniImageMessage(toUserName,fromUserName);
+                }else if("4".equals(content)){
+                    message=MessageUtil.iniMusicMessage(toUserName,fromUserName,"E:\\picture\\daolang\\xiao.jpg","西海情歌","刀郎的西海情歌","http://datang.tunnel.qydev.com/weixin/music/gao.mp3");
                 }
+
             }
 
 

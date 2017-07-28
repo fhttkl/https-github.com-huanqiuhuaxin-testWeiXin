@@ -2,13 +2,13 @@ package com.huanqiu.shangcheng.pojo;
 
 public class MusicMessage extends BaseMessage {
 
-    private Music music;
+    private Music Music;
 
-    public Music getMusic() {
-        return music;
+    public com.huanqiu.shangcheng.pojo.Music getMusic() {
+        return Music;
     }
 
-    public void setMusic(Music music) {
-        this.music = music;
+    public void setMusic(com.huanqiu.shangcheng.pojo.Music music) {
+        Music = music;
     }
 }

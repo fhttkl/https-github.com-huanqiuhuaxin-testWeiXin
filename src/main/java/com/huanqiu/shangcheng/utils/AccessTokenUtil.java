@@ -178,8 +178,8 @@ public class AccessTokenUtil {
         } catch (ParseException e) {
             e.printStackTrace();
         }*/
-        AccessToken accesToken = getAccessToken();
-        System.out.println(accesToken.getToken());
+      /*  AccessToken accesToken = getAccessToken();
+        System.out.println(accesToken.getToken());*/
     }
 
 }

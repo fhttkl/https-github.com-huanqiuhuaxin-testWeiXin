@@ -20,6 +20,7 @@ public class MessageUtil {
 
 	public static final String MESSAGE_IMAGE="image";
 	public static final  String MESSAGE_TEXT="text";
+	public static final  String MESSAGE_MUSIC="music";
 
 	public static final  String MESSAGE_IMAGEURL="datang.tunnel.qydev.com/weixin";
 
@@ -81,7 +82,7 @@ public class MessageUtil {
 
 	/**
 	 * 图片消息转xml
-	 * @param newsMessage
+	 * @param imageMessage
 	 * @return
 	 */
 	public static String imageMessageToXml(ImageMessage imageMessage){
@@ -91,6 +92,18 @@ public class MessageUtil {
 		return xml;
 	}
 
+
+	/**
+	 * 音乐消息转xml
+	 * @param musicMessage
+	 * @return
+	 */
+	public static String musicMessageToXml(MusicMessage musicMessage){
+		XStream xstream= new XStream();
+		xstream.alias("xml",musicMessage.getClass());  //标签互转
+		String xml = xstream.toXML(musicMessage);
+		return xml;
+	}
 
 	//如何拼装一个图片消息
 	public static String initNewsMessage(String toUserName,String fromUserName,List newsList){
@@ -130,5 +143,28 @@ public class MessageUtil {
 		return message;
 	}
 
+	public static String iniMusicMessage(String toUserName,String fromUserName,String picPath,String title,String description,String musicPath){
+		String humbMediaId="";
+		try {
+			humbMediaId=WeiXinUtil.fileUpload(picPath,AccessTokenUtil.getAccessToken().getToken(),"thumb");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String message=null;
+		Music Music=new Music();
+		Music.setThumbMediaId(humbMediaId);
+		Music.setTitle(title);
+		Music.setDescription(description);
+		Music.setMusicUrl(musicPath);
+		Music.setHQMusicUrl(musicPath);
+		MusicMessage musicMessage=new MusicMessage();
+		musicMessage.setFromUserName(toUserName);  //设置消息从哪来
+		musicMessage.setToUserName(fromUserName);  //设置消息到哪去
+		musicMessage.setMsgType(MESSAGE_MUSIC);  //设置文件类型
+		musicMessage.setCreateTime(new Date().getTime());
+		musicMessage.setMusic(Music);
+		message=musicMessageToXml(musicMessage);
+		return message;
+	}
 	
 }
