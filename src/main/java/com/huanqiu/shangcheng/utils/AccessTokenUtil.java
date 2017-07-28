@@ -88,8 +88,6 @@ public class AccessTokenUtil {
             e.printStackTrace();
             System.out.println("写入token失败");
         }
-
-
     }
 
     //写入Properties信息
@@ -178,8 +176,8 @@ public class AccessTokenUtil {
         } catch (ParseException e) {
             e.printStackTrace();
         }*/
-      /*  AccessToken accesToken = getAccessToken();
-        System.out.println(accesToken.getToken());*/
+        AccessToken accesToken = getAccessToken();
+        System.out.println(accesToken.getToken());
     }
 
 }
