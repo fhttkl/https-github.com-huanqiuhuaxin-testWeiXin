@@ -23,7 +23,7 @@ public class WeiXinMainController {
     @RequestMapping(value = "wx.do", method = RequestMethod.GET)
     public void WeiXinDoget(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            System.out.println("我是微信服务器，  我开始运行了");
+            System.out.println("我是微信服务器，  我开始运行了 ");
             String signature = req.getParameter("signature");
             String timestamp = req.getParameter("timestamp");
             String nonce = req.getParameter("nonce");
